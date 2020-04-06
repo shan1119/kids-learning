@@ -1,0 +1,20 @@
+html
+    head
+        title Janauary Test List
+    body
+        h1 Janauary Test List
+        h2 New Test: 
+            a(href="instance?templateid="+id) Start test!
+        br
+        h2 History
+        br
+        each row, index in instance
+            h2
+            |
+            a(href="instance?templateid="+id+"&instanceid="+row.instanceid) (#{index+1}). #{row.createtime}
+            |　　(
+            each his, indhis in row.history
+                a(href="check?templateid="+id+"&instanceid="+row.instanceid+"&historyid="+his.id) #{indhis+1}回目: #{his.point}
+                |　
+            |)
+        

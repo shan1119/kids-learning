@@ -1,0 +1,9 @@
+html
+    head
+        title= title
+    body
+        h1 list
+        each item in list
+            h2
+                a(href="template/"+item.name+"/main?templateid="+item.id) mathematics (#{item.description})
+        
