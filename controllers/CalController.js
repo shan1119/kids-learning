@@ -30,7 +30,6 @@ app.get("/main", (req, res) => {
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
     var templateid = query.templateid;
-    var templatename = req.params.tpname;
 
     // get instance and history
     let gethistory = async function () {
@@ -61,7 +60,6 @@ app.get("/instance", (req, res) => {
     var query = url_parts.query;
     var templateid = query.templateid;
     var instanceid = query.instanceid;
-    var templatename = req.params.tpname;
 
     let getinstance = async function () {
         var details = new Array(10);
@@ -131,7 +129,6 @@ app.get("/check", (req, res) => {
     var templateid = query.templateid;
     var instanceid = query.instanceid;
     var historyid = query.historyid;
-    var templatename = req.params.tpname;
 
     let gethistory = async function () {
         // get instance
@@ -155,6 +152,7 @@ app.get("/check", (req, res) => {
             param: param,
             yourAnswer: history[0].yourAnswer,
             answer: answer,
+            cost: history[0].cost,
             point: history[0].point
         });
     };
@@ -165,7 +163,8 @@ app.get("/check", (req, res) => {
 app.post("/check", (req, res) => {
     var instanceid = req.body.instanceid;
     var templateid = req.body.templateid;
-    var templatename = req.params.tpname;
+    var timer = req.body.cost;
+
     let point = 0;
     for (let index = 0; index < answer.length; index++) {
         if (req.body.answer[index] == answer[index]) point++;
@@ -181,7 +180,7 @@ app.post("/check", (req, res) => {
                 id: historyid,
                 instanceid: parseInt(instanceid),
                 point: point * 10,
-                cost: "01:30", // TODO dummy
+                cost: timer,
                 yourAnswer: req.body.answer
             }],
             cnt => {}
@@ -192,6 +191,7 @@ app.post("/check", (req, res) => {
             param: param,
             yourAnswer: req.body.answer,
             answer: answer,
+            cost: timer,
             point: point * 10
         });
     };

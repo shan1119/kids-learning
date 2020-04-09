@@ -1,8 +1,19 @@
 html
     head
-        title Janauary Test Result
+        title Test Result(Calculate)
     body
-        h1 Point : #{point}
+        h1 
+            |Point : 
+            if point <= 80
+                label(style="color:red;") #{point}
+            else
+                label(style="color:green;") #{point}
+            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            |Cost : 
+            if cost >= "02:00"
+                label(style="color:red;") #{cost}
+            else
+                label(style="color:green;") #{cost}
         table
             each row, index in param
                 tr
