@@ -13,3 +13,7 @@ training
 3. initial template if there is no record.
 
 * collection's name is plural. eg: templates/instances/histories
+
+2020.04.10
+1. add timer for test.
+2. set font color on point and cost in history page.
