@@ -17,3 +17,7 @@ training
 2020.04.10
 1. add timer for test.
 2. set font color on point and cost in history page.
+
+2020.04.17
+1. add draft 3d chart
+
