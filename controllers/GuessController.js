@@ -106,7 +106,8 @@ app.get("/instance", (req, res) => {
             templateid: templateid,
             sums: sums,
             cards: cards,
-            answer: answer
+            answer: answer,
+            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
         });
     };
 
