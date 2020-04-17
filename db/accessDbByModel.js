@@ -45,57 +45,69 @@ async function remove(model, condition) {
 }
 
 // init Template
-async function init() {
-  let list = await getAllList(Template);
+async function init(condition) {
+  let list = await getByCondition(Template, condition);
   if (list.length == 0) {
-    insertTemplate();
+    insertTemplate(condition);
   }
 }
 
-async function insertTemplate() {
-  await insert(Template, [{
-    "id": 1,
-    "name": "Cal",
-    "visible": "true",
-    "description": "Calculate Test",
-    "formular": [{
+async function insertTemplate(condition) {
+  if (condition.name == "name") {
+    await insert(Template, [{
       "id": 1,
-      "formular": "generate2(1)"
-    }, {
+      "name": "Cal",
+      "visible": "true",
+      "description": "Calculate Test",
+      "formular": [{
+        "id": 1,
+        "formular": "generate2(1)"
+      }, {
+        "id": 2,
+        "formular": "generate2(1)"
+      }, {
+        "id": 3,
+        "formular": "generate2(1)"
+      }, {
+        "id": 4,
+        "formular": "generate2(2)"
+      }, {
+        "id": 5,
+        "formular": "generate2(2)"
+      }, {
+        "id": 6,
+        "formular": "generate2(2)"
+      }, {
+        "id": 7,
+        "formular": "generate3(1)"
+      }, {
+        "id": 8,
+        "formular": "generate3(2)"
+      }, {
+        "id": 9,
+        "formular": "generate3(3)"
+      }, {
+        "id": 10,
+        "formular": "generate3(4)"
+      }]
+    }]);
+  } else if (condition.name == "Chart") {
+    await insert(Template, [{
       "id": 2,
-      "formular": "generate2(1)"
-    }, {
+      "name": "Chart",
+      "visible": "true",
+      "description": "Chart Training",
+      "formular": []
+    }]);
+  } else if (condition.name == "Guess") {
+    await insert(Template, [{
       "id": 3,
-      "formular": "generate2(1)"
-    }, {
-      "id": 4,
-      "formular": "generate2(2)"
-    }, {
-      "id": 5,
-      "formular": "generate2(2)"
-    }, {
-      "id": 6,
-      "formular": "generate2(2)"
-    }, {
-      "id": 7,
-      "formular": "generate3(1)"
-    }, {
-      "id": 8,
-      "formular": "generate3(2)"
-    }, {
-      "id": 9,
-      "formular": "generate3(3)"
-    }, {
-      "id": 10,
-      "formular": "generate3(4)"
-    }]
-  }, {
-    "id": 2,
-    "name": "Chart",
-    "visible": "true",
-    "description": "Chart Training",
-    "formular": []
-  }]);
+      "name": "Guess",
+      "visible": "true",
+      "description": "Guess Number Training",
+      "formular": []
+    }]);
+  }
 }
 
 module.exports = {

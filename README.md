@@ -21,3 +21,7 @@ training
 2020.04.17
 1. add draft 3d chart
 
+2020.04.18
+1. add guess number
+2. change init for adding new template
+

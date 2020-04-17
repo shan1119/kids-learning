@@ -1,0 +1,42 @@
+html
+    head
+        title New Test(Calculate)
+        script
+            include ../../../public/timer.js
+        script.
+            setInterval(setTimer, 1000)
+    body
+        form(action="/Guess/check", method="post")
+            input(type="hidden" name="instanceid" value=instanceid)
+            input(type="hidden" name="templateid" value=templateid)
+            input(type="hidden" name="cost" value="1")
+            h1 
+                |Timer : 
+                label(id="timer" name="timer") 00:00
+            h1 Aくん、Bくん、Cちゃん、Dちゃんの４人は、
+            table
+                tr
+                    each value, index in cards
+                        td
+                            h1 #{value}、
+                    td
+                        h1 のカードを１人１枚ずつ持っています。
+            h1 AくんとBくんとCちゃんのカードの数を足すと#{sums[0]}です。
+            h1 AくんとCちゃんとDちゃんのカードの数を足すと#{sums[1]}です。
+            h1 BくんとCちゃんとDちゃんのカードの数を足すと#{sums[2]}です。
+            h1 
+                |Aくん：
+                input(type="text" name="answer" style={width: "80px", height:"50px", "font-size":"24px",border:"solid 3px green;"}) 
+            h1 
+                |Bくん：
+                input(type="text" name="answer" style={width: "80px", height:"50px", "font-size":"24px",border:"solid 3px green;"}) 
+            h1 
+                |Cちゃん：
+                input(type="text" name="answer" style={width: "80px", height:"50px", "font-size":"24px",border:"solid 3px green;"}) 
+            h1
+                |Dちゃん：
+                input(type="text" name="answer" style={width: "80px", height:"50px", "font-size":"24px",border:"solid 3px green;"}) 
+            
+            button(type="submit",style={"font-size":"24px"} onclick="cost.value=timer.innerText") check
+                
+        

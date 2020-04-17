@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const dateFormat = require("dateformat");
 
-const data = require("../routes/createData");
+const data = require("../routes/createData").default;
 
 const url = require("url");
 

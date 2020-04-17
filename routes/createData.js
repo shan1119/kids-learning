@@ -58,6 +58,21 @@ function generate3(sign) {
   ];
 }
 
-module.exports.random = random;
-module.exports.generate2 = generate2;
-module.exports.generate3 = generate3;
+function getNumberSet() {
+  var rtn = [];
+  while (rtn.length < 4) {
+    let num = random(2, 9);
+    if (!rtn.includes(num)) {
+      rtn.push(num);
+    }
+  }
+
+  return rtn;
+}
+
+module.exports = {
+  random,
+  generate2,
+  generate3,
+  getNumberSet
+};

@@ -7,7 +7,7 @@ var Template = require("../models/Template")
 var Instance = require("../models/Instance")
 var History = require("../models/History")
 
-const data = require("../routes/createData").default;
+const data = require("../routes/createData");
 const db = require("../db/accessDbByModel");
 
 const url = require("url");
@@ -21,9 +21,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-var template = new Array(10);
-var param = new Array(10);
-var answer = new Array(10);
+var sums = new Array(3);
+var cards = new Array(4);
+var answer = new Array(4);
 
 app.get("/main", (req, res) => {
     // get templateid from query string
@@ -48,7 +48,7 @@ app.get("/main", (req, res) => {
             });
         }
 
-        res.render("Cal/main", {
+        res.render("Guess/main", {
             id: templateid,
             instance: ins
         });
@@ -64,30 +64,14 @@ app.get("/instance", (req, res) => {
     var instanceid = query.instanceid;
 
     let getinstance = async function () {
-        var details = new Array(10);
+        var details = new Array(4);
 
         if (instanceid == undefined) {
             // create new instance
             instanceid = await db.getMaxId(Instance);
-
-            for (let index = 0; index < 10; index++) {
-                if (index < 3) {
-                    param[index] = data.generate2(1);
-                } else if (index < 6) {
-                    param[index] = data.generate2(2);
-                } else {
-                    param[index] = data.generate3(index - 5);
-                }
-                // set question and answer
-                var q = data.random(0, index < 6 ? 2 : 3) * 2;
-                answer[index] = param[index][q];
-                param[index][q] = "";
-
-                //insert instanceDetails
-                // { id: 1,formularid: 1,formular: ["1", "+", "2", "=", "3"],qid: 2,answer: 3 }
+            answer = data.getNumberSet();
+            for (let index = 0; index < 4; index++) {
                 details[index] = {
-                    formular: param[index],
-                    qid: q,
                     answer: answer[index]
                 };
             }
@@ -109,15 +93,20 @@ app.get("/instance", (req, res) => {
                 templateid: parseInt(templateid)
             });
             for (let index = 0; index < instance[0].details.length; index++) {
-                param[index] = instance[0].details[index].formular;
                 answer[index] = instance[0].details[index].answer;
             }
         }
+        sums[0] = answer[0] + answer[1] + answer[2];
+        sums[1] = answer[0] + answer[2] + answer[3];
+        sums[2] = answer[1] + answer[2] + answer[3];
+        cards = [...answer].sort((a, b) => a - b);
 
-        res.render("Cal/instance", {
+        res.render("Guess/instance", {
             instanceid: instanceid,
             templateid: templateid,
-            param: param
+            sums: sums,
+            cards: cards,
+            answer: answer
         });
     };
 
@@ -139,7 +128,6 @@ app.get("/check", (req, res) => {
             templateid: parseInt(templateid)
         });
         for (let index = 0; index < instance[0].details.length; index++) {
-            param[index] = instance[0].details[index].formular;
             answer[index] = instance[0].details[index].answer;
         }
 
@@ -149,13 +137,20 @@ app.get("/check", (req, res) => {
             instanceid: parseInt(instanceid)
         });
 
-        res.render("Cal/check", {
+        sums[0] = answer[0] + answer[1] + answer[2];
+        sums[1] = answer[0] + answer[2] + answer[3];
+        sums[2] = answer[1] + answer[2] + answer[3];
+        cards = [...answer].sort((a, b) => a - b);
+
+        res.render("Guess/check", {
             templateid: templateid,
-            param: param,
             yourAnswer: history[0].yourAnswer,
             answer: answer,
+            sums: sums,
+            cards: cards,
             cost: history[0].cost,
-            point: history[0].point
+            point: history[0].point,
+            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
         });
     };
 
@@ -181,20 +176,22 @@ app.post("/check", (req, res) => {
             [{
                 id: historyid,
                 instanceid: parseInt(instanceid),
-                point: point * 10,
+                point: point * 25,
                 cost: timer,
                 yourAnswer: req.body.answer
             }],
             cnt => {}
         );
 
-        res.render("Cal/check", {
+        res.render("Guess/check", {
             templateid: templateid,
-            param: param,
             yourAnswer: req.body.answer,
             answer: answer,
+            sums: sums,
+            cards: cards,
             cost: timer,
-            point: point * 10
+            point: point * 25,
+            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
         });
     };
 
