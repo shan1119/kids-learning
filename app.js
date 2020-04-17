@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db/accessDbByModel");
 var CalController = require("./controllers/CalController");
+var ChartController = require("./controllers/ChartController");
 const path = require("path");
 var Template = require("./models/Template")
 
@@ -10,6 +11,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
 app.use("/Cal", CalController);
+app.use("/Chart", ChartController);
 
 app.get("/", (req, res) => {
   res.sendfile("index.html");

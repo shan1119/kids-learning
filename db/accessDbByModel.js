@@ -10,10 +10,14 @@ mongoose.connect(url, {
 });
 
 async function getAllList(model) {
-  return model.find();
+  return model.find().sort({
+    id: 1
+  });
 }
 async function getByCondition(model, condition) {
-  return model.find(condition);
+  return model.find(condition).sort({
+    id: 1
+  });
 }
 async function getMaxId(model) {
   return new Promise((resolve, reject) => {
@@ -85,6 +89,12 @@ async function insertTemplate() {
       "id": 10,
       "formular": "generate3(4)"
     }]
+  }, {
+    "id": 2,
+    "name": "Chart",
+    "visible": "true",
+    "description": "Chart Training",
+    "formular": []
   }]);
 }
 
