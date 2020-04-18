@@ -107,7 +107,8 @@ app.get("/instance", (req, res) => {
             sums: sums,
             cards: cards,
             answer: answer,
-            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
+            name: ["まりちゃん", "ゆきちゃん", "なっちゃん", "さきちゃん"]
+            // name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
         });
     };
 
@@ -151,7 +152,8 @@ app.get("/check", (req, res) => {
             cards: cards,
             cost: history[0].cost,
             point: history[0].point,
-            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
+            // name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
+            name: ["まりちゃん", "ゆきちゃん", "なっちゃん", "さきちゃん"]
         });
     };
 
@@ -192,7 +194,8 @@ app.post("/check", (req, res) => {
             cards: cards,
             cost: timer,
             point: point * 25,
-            name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
+            // name: ["Aくん", "Bくん", "Cちゃん", "Dちゃん"]
+            name: ["まりちゃん", "ゆきちゃん", "なっちゃん", "さきちゃん"]
         });
     };
 

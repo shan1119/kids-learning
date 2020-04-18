@@ -13,7 +13,7 @@ html
             h1 
                 |Timer : 
                 label(id="timer" name="timer") 00:00
-            h1 Aくん、Bくん、Cちゃん、Dちゃんの４人は、
+            h1 #{name[0]}、#{name[1]}、#{name[2]}、#{name[3]}の４人は、
             table
                 tr
                     each value, index in cards
@@ -21,9 +21,9 @@ html
                             h1 #{value}、
                     td
                         h1 のカードを１人１枚ずつ持っています。
-            h1 AくんとBくんとCちゃんのカードの数を足すと#{sums[0]}です。
-            h1 AくんとCちゃんとDちゃんのカードの数を足すと#{sums[1]}です。
-            h1 BくんとCちゃんとDちゃんのカードの数を足すと#{sums[2]}です。
+            h1 #{name[0]}と#{name[1]}と#{name[2]}のカードの数を足すと#{sums[0]}です。
+            h1 #{name[0]}と#{name[2]}と#{name[3]}のカードの数を足すと#{sums[1]}です。
+            h1 #{name[1]}と#{name[2]}と#{name[3]}のカードの数を足すと#{sums[2]}です。
             table
                 each row, index in answer
                     tr
