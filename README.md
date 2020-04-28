@@ -25,3 +25,8 @@ training
 1. add guess number
 2. change init for adding new template
 
+2020.04.28
+1. add unit conversion case as template:4
+2. move latest instance to top
+
+
