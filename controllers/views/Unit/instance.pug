@@ -1,0 +1,34 @@
+html
+    head
+        title New Test(Unit Conversion)
+        script
+            include ../../../public/timer.js
+        script.
+            setInterval(setTimer, 1000)
+    body
+        form(action="/Unit/check", method="post")
+            input(type="hidden" name="instanceid" value=instanceid)
+            input(type="hidden" name="templateid" value=templateid)
+            input(type="hidden" name="cost" value="1")
+            h1 
+                |
+                |Timer : 
+                label(id="timer" name="timer") 00:00
+                |
+            table
+                each row, index in param
+                    tr
+                        td
+                            h1  (#{index+1})
+                        td(style={"border-bottom": "1pt solid black"})
+                            h1
+                                |  
+                                each value in row
+                                    if value == ""
+                                        input(type="text" name="answer" style={width: "80px", "font-size":"24px",border:"solid 3px green;"}) 
+                                    else
+                                        | #{value}  
+                                |
+            button(type="submit",style={"font-size":"24px"} onclick="cost.value=timer.innerText") check
+                
+        

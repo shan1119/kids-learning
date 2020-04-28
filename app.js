@@ -4,6 +4,7 @@ const db = require("./db/accessDbByModel");
 var CalController = require("./controllers/CalController");
 var ChartController = require("./controllers/ChartController");
 var GuessController = require("./controllers/GuessController");
+var UnitController = require("./controllers/UnitController");
 const path = require("path");
 var Template = require("./models/Template")
 
@@ -14,6 +15,7 @@ app.use(express.static("public"));
 app.use("/Cal", CalController);
 app.use("/Chart", ChartController);
 app.use("/Guess", GuessController);
+app.use("/Unit", UnitController);
 
 app.get("/", (req, res) => {
   res.sendfile("index.html");
@@ -41,6 +43,9 @@ app.listen(3000, () => {
   });
   db.init({
     name: "Guess"
+  });
+  db.init({
+    name: "Unit"
   });
   console.log("Listening on port 3000!");
 });

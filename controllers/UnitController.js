@@ -21,9 +21,15 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var unitSet = {
+    base: ["cm", "mm", "dL", "mL", "mL", "m", "g", "分"],
+    next: ["m", "cm", "L", "dL", "L", "km", "kg", "時"],
+    rate: [100, 10, 10.100, 1000, 1000, 1000, 60]
+};
+
 var template = new Array(10);
 var param = new Array(10);
-var answer = new Array(10);
+var answer = new Array(20);
 
 app.get("/main", (req, res) => {
     // get templateid from query string
@@ -48,7 +54,7 @@ app.get("/main", (req, res) => {
             });
         }
 
-        res.render("Cal/main", {
+        res.render("Unit/main", {
             id: templateid,
             instance: ins
         });
@@ -71,26 +77,27 @@ app.get("/instance", (req, res) => {
             instanceid = await db.getMaxId(Instance);
 
             for (let index = 0; index < 10; index++) {
-                if (index < 3) {
-                    param[index] = data.generate2(1);
-                } else if (index < 6) {
-                    param[index] = data.generate2(2);
-                } else {
-                    param[index] = data.generate3(index - 5);
-                }
+                let sign = data.random(1, 2);
+                let i = data.random(0, data.unitSet.rate.length - 1);
+                let rate = data.unitSet.rate[i];
+                param[index] = data.generateUnit(sign, i);
+                console.log(param[index]);
                 // set question and answer
-                var q = data.random(0, index < 6 ? 2 : 3) * 2;
-                answer[index] = param[index][q];
+                var q = data.random(0, 2) * 5;
+                answer[2 * index] = param[index][q];
+                answer[2 * index + 1] = param[index][q + 2];
                 param[index][q] = "";
+                param[index][q + 2] = "";
 
                 //insert instanceDetails
                 // { id: 1,formularid: 1,formular: ["1", "+", "2", "=", "3"],qid: 2,answer: 3 }
                 details[index] = {
                     formular: param[index],
-                    qid: q,
-                    answer: answer[index]
+                    qid: rate,
+                    answer: answer[2 * index] * rate + answer[2 * index + 1]
                 };
             }
+            console.log(answer);
 
             // insert instance
             db.insert(
@@ -110,11 +117,14 @@ app.get("/instance", (req, res) => {
             });
             for (let index = 0; index < instance[0].details.length; index++) {
                 param[index] = instance[0].details[index].formular;
-                answer[index] = instance[0].details[index].answer;
+                let rate = instance[0].details[index].qid;
+                let ai = instance[0].details[index].answer;
+                answer[2 * index] = Math.floor(ai / rate);
+                answer[2 * index + 1] = ai - answer[2 * index] * rate;
             }
         }
 
-        res.render("Cal/instance", {
+        res.render("Unit/instance", {
             instanceid: instanceid,
             templateid: templateid,
             param: param
@@ -140,7 +150,10 @@ app.get("/check", (req, res) => {
         });
         for (let index = 0; index < instance[0].details.length; index++) {
             param[index] = instance[0].details[index].formular;
-            answer[index] = instance[0].details[index].answer;
+            let rate = instance[0].details[index].qid;
+            let ai = instance[0].details[index].answer;
+            answer[2 * index] = Math.floor(ai / rate);
+            answer[2 * index + 1] = ai - answer[2 * index] * rate;
         }
 
         // get history
@@ -149,7 +162,7 @@ app.get("/check", (req, res) => {
             instanceid: parseInt(instanceid)
         });
 
-        res.render("Cal/check", {
+        res.render("Unit/check", {
             templateid: templateid,
             param: param,
             yourAnswer: history[0].yourAnswer,
@@ -158,7 +171,8 @@ app.get("/check", (req, res) => {
             point: history[0].point
         });
     };
-
+    console.log(10 % 3);
+    console.log(10 / 3);
     gethistory();
 });
 
@@ -168,8 +182,9 @@ app.post("/check", (req, res) => {
     var timer = req.body.cost;
 
     let point = 0;
-    for (let index = 0; index < answer.length; index++) {
-        if (req.body.answer[index] == answer[index]) point++;
+    for (let index = 0; index < answer.length / 2; index++) {
+        if (req.body.answer[2 * index] == answer[2 * index] &&
+            req.body.answer[2 * index + 1] == answer[2 * index + 1]) point++;
     }
 
     let check = async function () {
@@ -188,7 +203,7 @@ app.post("/check", (req, res) => {
             cnt => {}
         );
 
-        res.render("Cal/check", {
+        res.render("Unit/check", {
             templateid: templateid,
             param: param,
             yourAnswer: req.body.answer,

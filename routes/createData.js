@@ -70,9 +70,47 @@ function getNumberSet() {
   return rtn;
 }
 
+const unitSet = {
+  base: ["cm", "mm", "dL", "mL", "mL", "m", "g", "分"],
+  next: ["m", "cm", "L", "dL", "L", "km", "kg", "時"],
+  rate: [100, 10, 10, 100, 1000, 1000, 1000, 60]
+};
+
+function generateUnit(sign, i) {
+  var numbers = new Array(6);
+  let base = unitSet.base[i];
+  let next = unitSet.next[i];
+  let rate = unitSet.rate[i];
+
+  numbers[0] = random(1, 9);
+  numbers[1] = random(rate / 10, rate - 1);
+  numbers[2] = random(1, 9);
+  numbers[3] = random(rate / 10, rate - 1);
+
+  numbers[5] = numbers[0] * rate + numbers[1] + numbers[2] * rate + numbers[3];
+  numbers[4] = Math.floor(numbers[5] / rate);
+  numbers[5] = numbers[5] - numbers[4] * rate;
+  if (sign == 2) {
+    // exchange
+    numbers[0] += numbers[4];
+    numbers[4] = numbers[0] - numbers[4];
+    numbers[0] = numbers[0] - numbers[4];
+    numbers[1] += numbers[5];
+    numbers[5] = numbers[1] - numbers[5];
+    numbers[1] = numbers[1] - numbers[5];
+  }
+
+  return [numbers[0], next, numbers[1], base, sign == 1 ? "＋" : "ー",
+    numbers[2], next, numbers[3], base, "＝",
+    numbers[4], next, numbers[5], base
+  ];
+}
+
 module.exports = {
   random,
   generate2,
   generate3,
-  getNumberSet
+  getNumberSet,
+  generateUnit,
+  unitSet
 };

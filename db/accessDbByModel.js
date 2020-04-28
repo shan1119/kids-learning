@@ -15,9 +15,15 @@ async function getAllList(model) {
   });
 }
 async function getByCondition(model, condition) {
-  return model.find(condition).sort({
-    id: 1
-  });
+  if (model == Instance) {
+    return model.find(condition).sort({
+      id: -1
+    });
+  } else {
+    return model.find(condition).sort({
+      id: 1
+    });
+  }
 }
 async function getMaxId(model) {
   return new Promise((resolve, reject) => {
@@ -105,6 +111,14 @@ async function insertTemplate(condition) {
       "name": "Guess",
       "visible": "true",
       "description": "Guess Number Training",
+      "formular": []
+    }]);
+  } else if (condition.name == "Unit") {
+    await insert(Template, [{
+      "id": 4,
+      "name": "Unit",
+      "visible": "true",
+      "description": "Unit Conversion Training",
       "formular": []
     }]);
   }

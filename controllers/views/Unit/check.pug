@@ -1,0 +1,40 @@
+-
+    var i=0;
+html
+    head
+        title Test Result(Unit Conversion)
+    body
+        h1 
+            a(href="main?templateid="+templateid) back to list
+            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            |Point : 
+            if point <= 80
+                label(style="color:red;") #{point}
+            else
+                label(style="color:green;") #{point}
+            |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            |Cost : 
+            if cost >= "02:00"
+                label(style="color:red;") #{cost}
+            else
+                label(style="color:green;") #{cost}
+        table
+            each row, index in param
+                tr
+                    td
+                        h1  (#{index+1})
+                    td(style={"border-bottom": "1pt solid black"})
+                        h1
+                            |  
+                            each item, ia in row
+                                if item == ""
+                                    if ia % 5 == 0
+                                        input(type="text" disabled style={width: "80px", "font-size":"24px", background:yourAnswer[2*index]==answer[2*index]?"cyan":"fuchsia", border:"solid 3px green;"} value=yourAnswer[2*index]) 
+                                    else
+                                        input(type="text" disabled style={width: "80px", "font-size":"24px", background:yourAnswer[2*index+1]==answer[2*index+1]?"cyan":"fuchsia", border:"solid 3px green;"} value=yourAnswer[2*index+1]) 
+                                else
+                                    | #{item}  
+                            |
+                    td(align="right", style={width: "300px", "border-bottom": "1pt solid black"})
+                        h1 answer : #{answer[2*index]} , #{answer[2*index+1]} 
+
