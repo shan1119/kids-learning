@@ -42,5 +42,9 @@ training
   1.3. services
     http://localhost:3001/
     http://localhost:8081/
+2. add docker-compose.yml
+  2.1. docker-compose up -d
+  2.2. docker-compose down
+
 
 
