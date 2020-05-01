@@ -31,19 +31,28 @@ training
 
 2020.05.02
 1. add Dockerfile
+
   1.1. prepare images.
+  
     docker build -t training-img .
     docker pull mongo
     docker pull mongo-express
+    
   1.2. create containers
+  
     docker run -itd --name mongo mongo 
     docker run -itd --name my -p 3001:3000 --link mongo:mongo training-img nodemon
     docker run -itd --name mongo-express -p 8081:8081 --link mongo:mongo mongo-express
+    
   1.3. services
+  
     http://localhost:3001/
     http://localhost:8081/
+    
 2. add docker-compose.yml
+
   2.1. docker-compose up -d
+  
   2.2. docker-compose down
 
 
