@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var Template = require("../models/Template")
 var Instance = require("../models/Instance")
 var History = require("../models/History")
-var url = "mongodb://localhost:27017/training";
+var url = "mongodb://mongo:27017/training";
 
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -59,7 +59,7 @@ async function init(condition) {
 }
 
 async function insertTemplate(condition) {
-  if (condition.name == "name") {
+  if (condition.name == "Cal") {
     await insert(Template, [{
       "id": 1,
       "name": "Cal",
