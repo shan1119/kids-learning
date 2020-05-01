@@ -8,5 +8,3 @@ WORKDIR /opt/kids-learning/
 RUN rm -r node_modules
 RUN npm install
 RUN npm install nodemon -g
-
-RUN nodemon
