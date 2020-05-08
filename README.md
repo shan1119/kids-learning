@@ -55,5 +55,10 @@ training
   
   2.2. docker-compose down
 
+2020.05.08
+1. add bind volume for mongodb, so that data will not be disappeared when remove docker container.
+2. remove no use code.
+
+
 
 

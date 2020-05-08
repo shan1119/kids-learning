@@ -3,7 +3,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const dateFormat = require("dateformat");
-var Template = require("../models/Template")
 var Instance = require("../models/Instance")
 var History = require("../models/History")
 

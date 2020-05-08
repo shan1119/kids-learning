@@ -2,13 +2,24 @@ version: "2"
 services:
   mongo:
     image: mongo
+    container_name: mongo
+    command: ["--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./mongodb:/data/db"
+    restart: always
   mongo-express:
     image: mongo-express
+    container_name: mongo-express
     ports:
       - "8081:8081"
+    restart: always
   training:
     image: training
+    container_name: training
     build: .
     ports:
       - "3001:3000"
     entrypoint: "nodemon"
+    restart: always

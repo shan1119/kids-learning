@@ -3,7 +3,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
 const dateFormat = require("dateformat");
-var Template = require("../models/Template")
 var Instance = require("../models/Instance")
 var History = require("../models/History")
 
@@ -20,12 +19,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-var unitSet = {
-    base: ["cm", "mm", "dL", "mL", "mL", "m", "g", "分"],
-    next: ["m", "cm", "L", "dL", "L", "km", "kg", "時"],
-    rate: [100, 10, 10.100, 1000, 1000, 1000, 60]
-};
 
 var template = new Array(10);
 var param = new Array(10);
@@ -171,8 +164,7 @@ app.get("/check", (req, res) => {
             point: history[0].point
         });
     };
-    console.log(10 % 3);
-    console.log(10 / 3);
+
     gethistory();
 });
 
